@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Alex+Brush&family=Great+Vibes&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-serif-standard: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-serif-high-contrast: 'Playfair Display', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+  /* RPF Official Branding Colors (Navy Blue, Deep Gold/Amber, Slate Gray) */
+  --color-rpf-navy: #0e2240;
+  --color-rpf-navy-light: #16335f;
+  --color-rpf-gold: #d4af37;
+  --color-rpf-gold-dark: #b58e23;
+  --color-rpf-slate: #475569;
+
+  /* Redefining slate palette to slate blue/gray tones */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* Redefining stone/neutral palette to balanced neutral stones */
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
+
+  /* Redefining indigo to RPF Official Navy Blue Palette */
+  --color-indigo-50: #f0f4f8;
+  --color-indigo-100: #d9e2ec;
+  --color-indigo-200: #bcccdc;
+  --color-indigo-300: #9fb3c8;
+  --color-indigo-400: #627d98;
+  --color-indigo-500: #334e68;
+  --color-indigo-600: #0e2240; /* RPF Primary Navy Blue */
+  --color-indigo-700: #0a1b33; /* Darkest Navy for headers/sidebars */
+  --color-indigo-800: #071222;
+  --color-indigo-900: #040a12;
+  --color-indigo-950: #020509;
+
+  /* Redefining emerald to premium Navy-Teal or Bright Active Teal */
+  --color-emerald-50: #f0fdf4;
+  --color-emerald-100: #dcfce7;
+  --color-emerald-200: #bbf7d0;
+  --color-emerald-300: #86efac;
+  --color-emerald-400: #4ade80;
+  --color-emerald-500: #22c55e;
+  --color-emerald-600: #16a34a;
+  --color-emerald-700: #15803d;
+
+  /* Deep Gold / Amber Palette overrides */
+  --color-amber-50: #fdfbf7;
+  --color-amber-100: #fbf2d3;
+  --color-amber-200: #f7e3af;
+  --color-amber-300: #f3ce7a;
+  --color-amber-400: #eeba4c;
+  --color-amber-500: #d4af37; /* RPF Branding Gold */
+  --color-amber-600: #b58e23; /* Darker Gold for texts */
+  --color-amber-700: #906e1b;
+}
+
+/* Custom CSS classes for consistent styling */
+html, body {
+  background-color: #f1f5f9;  /* Elegant cool gray representing slate gray base */
+  font-family: var(--font-sans);
+  color: #0e2240; /* Commanding primary Navy Blue for primary reading */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Print CSS Configurations */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  .print-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  table, th, td {
+    border: 1px solid #000000 !important;
+  }
+
+  th, td {
+    padding: 4px 6px !important;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0 !important;
+  }
+}
+
+
+

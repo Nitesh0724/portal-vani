@@ -1,0 +1,7 @@
+{
+  "name": "node-domexception",
+  "version": "1.0.0",
+  "description": "Native fallback for node-domexception",
+  "main": "index.js",
+  "type": "commonjs"
+}

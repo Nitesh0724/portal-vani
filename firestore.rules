@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net - Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Global Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "nitesh0724@gmail.com" ||
+        request.auth.token.phone_number == "+917250322223" ||
+        request.auth.token.phone_number == "7250322223"
+      );
+    }
+
+    function isValidId(id) {
+       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidUserProfile(data) {
+      return data.id is string && data.id.size() <= 128
+        && (!("name" in data) || (data.name is string && data.name.size() <= 128))
+        && (!("pfNumber" in data) || (data.pfNumber is string && data.pfNumber.size() <= 128));
+    }
+
+    function isValidFeedback(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.userId is string && data.userId.size() <= 128
+        && data.type is string && (data.type == "complaint" || data.type == "experience")
+        && data.title is string && data.title.size() <= 256
+        && data.description is string && data.description.size() <= 4096
+        && data.senderName is string && data.senderName.size() <= 128
+        && data.senderPfNumber is string && data.senderPfNumber.size() <= 128
+        && data.senderEmail is string && data.senderEmail.size() <= 128
+        && data.createdAt is string;
+    }
+
+    // 2. User Profiles Security Rules & Subcollections
+    match /users/{userId} {
+      allow read, write, get, list: if true;
+
+      // Direct subcollection of saved officer profiles owned by this user
+      match /profiles/{profileId} {
+        allow read, write, get, list: if true;
+      }
+
+      // Direct subcollection of journals (TA claims) owned by this user
+      match /journals/{journalId} {
+        allow read, write, get, list: if true;
+      }
+    }
+
+    // Root collections for global fallback sync
+    match /global_journals/{journalId} {
+      allow read, write, get, list: if true;
+    }
+
+    match /global_profiles/{profileId} {
+      allow read, write, get, list: if true;
+    }
+
+    // Support collectionGroup queries for Admin Console
+    match /{path=**}/journals/{journalId} {
+      allow read, write, get, list: if true;
+    }
+    match /{path=**}/profiles/{profileId} {
+      allow read, write, get, list: if true;
+    }
+
+    // Connection validation probe
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // 3. Feedbacks Security Rules
+    match /feedbacks/{feedbackId} {
+      allow get: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && isValidId(feedbackId) && feedbackId == incoming().id && incoming().userId == request.auth.uid && isValidFeedback(incoming());
+      allow update: if isAdmin() && isValidId(feedbackId) && incoming().diff(existing()).affectedKeys().hasOnly(['reply', 'repliedAt']) && incoming().reply is string;
+      allow delete: if isAdmin() && isValidId(feedbackId);
+    }
+
+    // 4. Global Settings Security Rules
+    match /settings/{settingsId} {
+      allow read, get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create, update: if isAdmin() && isValidId(settingsId) && incoming().email is string && incoming().email.size() <= 128 && incoming().phone is string && incoming().phone.size() <= 128;
+      allow delete: if isAdmin() && isValidId(settingsId);
+    }
+  }
+}

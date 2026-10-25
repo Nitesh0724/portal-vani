@@ -1,0 +1,11 @@
+{
+  "name": "Remix: RPF Travelling Allowance Journal",
+  "description": "An automated TA journal compiler with secure cloud authentication and user profile management for Railway Protection Force (RPF) officers. Features customizable rate rules, multi-officer profiles, and print-ready journals.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

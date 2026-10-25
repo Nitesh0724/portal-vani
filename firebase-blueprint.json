@@ -1,0 +1,160 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Store fields like PF Number, Name, Designation, Basic Pay, Scale of Pay, Date of Appointment, Security Branch/Division/Headquarter/Post, and Rule Governed By.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique user ID (matches auth.uid)"
+        },
+        "email": {
+          "type": "string",
+          "description": "Login email for verification"
+        },
+        "pfNumber": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "designation": {
+          "type": "string"
+        },
+        "basicPay": {
+          "type": "number"
+        },
+        "scaleOfPay": {
+          "type": "string"
+        },
+        "dateOfAppointment": {
+          "type": "string"
+        },
+        "branch": {
+          "type": "string"
+        },
+        "division": {
+          "type": "string"
+        },
+        "headquarter": {
+          "type": "string"
+        },
+        "ruleGoverned": {
+          "type": "string"
+        },
+        "darkMode": {
+          "type": "boolean",
+          "description": "User preference for Dark Mode/Night Mode"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "pfNumber", "name", "designation", "basicPay"]
+    },
+    "TAJournal": {
+      "title": "TAJournal",
+      "description": "Travelling Allowance journal containing a month of travel logs and precomputed totals.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "profileId": {
+          "type": "string"
+        },
+        "monthClaimed": {
+          "type": "string"
+        },
+        "isDraft": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "allowanceType": {
+          "type": "string"
+        },
+        "freePassAllowed": {
+          "type": "string"
+        },
+        "percentage30Days": {
+          "type": "number"
+        },
+        "percentage70Days": {
+          "type": "number"
+        },
+        "percentage100Days": {
+          "type": "number"
+        },
+        "totalDays": {
+          "type": "number"
+        },
+        "totalAmount": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "profileId", "monthClaimed", "isDraft"]
+    },
+    "FeedbackEntry": {
+      "title": "FeedbackEntry",
+      "description": "Feedbacks, complaints or experiences submitted by users, and matching admin replies.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderPfNumber": { "type": "string" },
+        "senderEmail": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "reply": { "type": "string" },
+        "repliedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "type", "title", "description", "senderName", "createdAt"]
+    },
+    "ContactConfig": {
+      "title": "ContactConfig",
+      "description": "Global settings for Contact Us, editable by the system owner.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["email", "phone"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Access profile information of a user"
+    },
+    "/users/{userId}/profiles/{profileId}": {
+      "schema": "UserProfile",
+      "description": "The custom officer profiles created/saved by the user"
+    },
+    "/users/{userId}/journals/{journalId}": {
+      "schema": "TAJournal",
+      "description": "The travelling allowance journals created by the user"
+    },
+    "/feedbacks/{feedbackId}": {
+      "schema": "FeedbackEntry",
+      "description": "Feedbacks, complaints and experiences submitted by users, readable by their owners and the administrator, and repliable by the administrator."
+    },
+    "/settings/{settingsId}": {
+      "schema": "ContactConfig",
+      "description": "Global settings for the app, including contact email and phone, editable only by the app parent/admin."
+    },
+    "/test/{docId}": {
+      "schema": "ContactConfig",
+      "description": "Connection test probe document used at boot to verify database connectivity."
+    }
+  }
+}

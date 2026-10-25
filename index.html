@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remix: RPF Travelling Allowance Journal</title>
+    <meta name="description" content="An automated TA journal compiler with secure cloud authentication and user profile management for Railway Protection Force (RPF) officers. Features customizable rate rules, multi-officer profiles, and print-ready journals." />
+    <meta property="og:title" content="Remix: RPF Travelling Allowance Journal" />
+    <meta property="og:description" content="An automated TA journal compiler with secure cloud authentication and user profile management for Railway Protection Force (RPF) officers. Features customizable rate rules, multi-officer profiles, and print-ready journals." />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="RPF TA" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+      // Clear stale service workers and caches immediately on boot
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          for (var r of regs) { r.unregister(); }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(function(keys) {
+          for (var k of keys) { caches.delete(k); }
+        });
+      }
+
+      // Safeguard against unhandled script errors during initial loading
+      window.addEventListener('error', function(e) {
+        var root = document.getElementById('root');
+        var loader = document.getElementById('app-boot-loader');
+        if (loader) {
+          loader.innerHTML = '<div style="background:#161811;border:1px solid rgba(245,158,11,0.3);padding:24px;border-radius:16px;max-width:440px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);">' +
+            '<div style="font-size:28px;margin-bottom:8px;">⚠️</div>' +
+            '<div style="color:#f59e0b;font-weight:bold;font-size:16px;margin-bottom:6px;">RPF TA System Reconnecting</div>' +
+            '<div style="color:#94a3b8;font-size:12px;margin-bottom:14px;line-height:1.5;">Click below to reload the application cleanly / कृपया पुनः लोड करें।</div>' +
+            '<button onclick="location.reload()" style="background:#f59e0b;color:#0c0d0a;font-weight:bold;padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:13px;width:100%;">Reload Application / पुनः लोड करें</button>' +
+            '</div>';
+        }
+      });
+    </script>
+  </head>
+  <body style="margin:0;background-color:#0c0d0a;color:#f5f5f4;">
+    <div id="root">
+      <!-- Fast styled initial loader to prevent blank white void before React hydrate -->
+      <div id="app-boot-loader" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;font-family:system-ui,-apple-system,sans-serif;background-color:#0c0d0a;">
+        <div style="width:42px;height:42px;border:3px solid rgba(245,158,11,0.2);border-top-color:#f59e0b;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;"></div>
+        <div style="color:#f59e0b;font-size:13px;font-weight:bold;letter-spacing:0.1em;text-transform:uppercase;font-family:monospace;">RPF TA SYSTEM INITIALIZING...</div>
+        <div style="color:#78716c;font-size:11px;margin-top:4px;">रेलवे सुरक्षा बल यात्रा भत्ता पोर्टल लोड हो रहा है</div>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
