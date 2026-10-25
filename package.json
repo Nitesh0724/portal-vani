@@ -37,9 +37,6 @@
     "typescript": "~5.8.2",
     "vite": "^6.2.3"
   },
-  "overrides": {
-    "node-domexception": "file:./shims/node-domexception"
-  },
   "devDependencies": {
     "@types/nodemailer": "^8.0.0",
     "@types/pdf-parse": "^1.1.5"
