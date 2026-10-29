@@ -152,22 +152,13 @@ export default function Auth({ onAuthSuccess, onOfflineBypass }: AuthProps) {
 
     // Generate random 6-digit OTP
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    setGeneratedOtp(code);
+    //setGeneratedOtp(code);
     setOtpSent(true);
     
     // Dynamic ultra-informative message
-    const msg = `📬 [RPF CENTRAL GATEWAY SIMULATOR]
---------------------------------------------------
-👤 Officer Profile: ${nameToDisplay}
-📱 Mobile SMS Sent: ${formattedMobile}
-✉️ Email Sent: ${targetEmail}
---------------------------------------------------
-Your active RPF Authorization Token (OTP) is:
-
-                 🔑  ${code}  🔑
-
-*(For developer testing/quick-access, you can also use "123456" as a universal Master OTP!)*`;
-    setOtpToast(msg);
+    setOtpToast(
+  "OTP sent successfully to your registered email address."
+);
 
     // Call live backend router integration
     try {
@@ -231,8 +222,10 @@ Your active RPF Authorization Token (OTP) is:
             throw new Error('Please click "Send OTP / ओटीपी भेजे" first to generate the verification code.');
           }
           const enteredClean = userEnteredOtp.trim();
-          if (enteredClean !== generatedOtp && enteredClean !== '123456' && enteredClean !== '1234') {
-            throw new Error('Invalid OTP code. Please enter the correct 6-digit numeric verification code (Visible in the simulator box below or use "123456").');
+          if (
+  enteredClean !== generatedOtp
+) {
+            throw new Error('Please enter the OTP sent to your registered email address.');
           }
 
           // OTP verified successfully!
@@ -823,7 +816,6 @@ Your active RPF Authorization Token (OTP) is:
                     📋 Copy Generated OTP / ओटीपी कॉपी करें ({generatedOtp})
                   </button>
                   <span className="text-[10px] text-slate-500 font-medium italic text-right">
-                    * Pro-tip: You can also login with master code <strong className="text-indigo-900 bg-indigo-50 border border-indigo-150 px-1.5 py-0.5 rounded-xs font-bold">123456</strong>!
                   </span>
                 </div>
 
